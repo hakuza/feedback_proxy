@@ -1,0 +1,35 @@
+version: '3'
+
+services: 
+  feedback: 
+    image: uhan19/feedback_feedback
+    depends_on: 
+      - 'database'
+    ports: 
+      - '3002:3002'
+
+  payment:
+    image: bmblumenfeld/payment
+    depends_on:
+      - 'database'
+    ports: 
+      - '3003:3003'
+
+  description: 
+    image: camnix/description:tagname
+    depends_on: 
+      - 'database'
+    ports: 
+      - '3001:3001'
+  
+  proxy:
+    image: uhan19/proxy
+    depends_on:
+      - 'feedback'
+      - 'payment'
+      - 'description'
+    ports:
+      - '3000:3000'
+      
+  database: 
+    image: mongo:latest
