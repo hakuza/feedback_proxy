@@ -1,6 +1,13 @@
 version: '3'
 
 services: 
+  description: 
+    image: camnix/description:tagname
+    depends_on: 
+      - 'database'
+    ports: 
+      - '3001:3001'
+  
   feedback: 
     image: uhan19/feedback_feedback
     depends_on: 
@@ -15,19 +22,26 @@ services:
     ports: 
       - '3003:3003'
 
-  description: 
-    image: camnix/description:tagname
-    depends_on: 
+  compare: 
+    image: jsonbao/compare
+    ports: 
+      - '3004:3004'
+
+  load: 
+    image: camnix/expanded_description
+    depends_on:
       - 'database'
     ports: 
-      - '3001:3001'
+      - '3005:3005'
   
   proxy:
     image: uhan19/proxy
     depends_on:
+      - 'description'
       - 'feedback'
       - 'payment'
-      - 'description'
+      - 'compare'
+      - 'load'
     ports:
       - '3000:3000'
       

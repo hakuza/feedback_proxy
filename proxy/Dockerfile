@@ -7,11 +7,12 @@ RUN mkdir -p /src/proxy
 # Tell your container where your app's source code will live
 WORKDIR /src/proxy
 
+COPY package.json /src/proxy
 # What source code do you what to copy, and where to put it?
-COPY . /src/proxy
+RUN npm install
 
 # Does your app have any dependencies that should be installed?
-RUN npm install
+COPY . /src/proxy
 
 # What port will the container talk to the outside world with once created?
 EXPOSE 3000
