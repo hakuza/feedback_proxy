@@ -35,7 +35,7 @@ services:
       - '3005:3005'
   
   proxy:
-    image: uhan19/proxy
+    build: proxy/
     depends_on:
       - 'description'
       - 'feedback'
